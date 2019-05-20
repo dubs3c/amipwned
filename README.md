@@ -40,6 +40,24 @@ A reason to try out `aiohttp` and writing some `asyncio` code! However, if you l
 
 ## How to run
 
+## For production
+
+1. Install the project
+`pip install amipwned`
+
+2. Create the following configuration file at `~/.amipwned.ini`
+```
+[postgresql]
+host = localhost
+port = 5432
+username = postgres
+password =
+databaseName = amipwned
+```
+
+3. Run it!
+`amipwned --web start`
+
 ### For development
 Recommended way of installing is using `poetry`.
 1. Simply run `poetry install` after cloning the repo.
