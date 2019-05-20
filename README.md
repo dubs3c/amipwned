@@ -40,7 +40,7 @@ A reason to try out `aiohttp` and writing some `asyncio` code! However, if you l
 
 ## How to run
 
-## For production
+### For production
 
 1. Install the project
 `pip install amipwned`
