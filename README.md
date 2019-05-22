@@ -4,7 +4,9 @@ Send password hashes to a simple web API which will return `200` for pwned and `
 
 `amipwned` has two features, the web service and the `load` service. The `load` services takes a password dump as input and saves each password and its corresponding hash to a Postgresql database (other DBs may be supported if requested).
 
-It's up to the user to load any password leak they want.
+## Purpose
+
+Run `amipwned` locally in your network and have your backend that are exposed to the internet send requests to `amipwned` to check if a given hash is OK or not. The project gives 100% control over the data stored in the DB.
 
 ```                                                                                                     
                                                                                                          
@@ -37,6 +39,15 @@ optional arguments:
 ## Motivation
 
 A reason to try out `aiohttp` and writing some `asyncio` code! However, if you like the idea of this project, create an issue with your suggested improvements (or send a PR) and I'll maybe implement/merge them :)
+
+## Requirements
+
+### Prerequisites
+`sudo apt install postgres postgresql-contrib libpq-dev python3.7-dev`
+
+* Linux (Tested on Ubuntu but should work on other distributions as well)
+* Python 3.7
+* PostgreSQL
 
 ## How to run
 

@@ -5,7 +5,7 @@ import sys
 
 from amipwned.config import Config
 from amipwned.daemon import Daemon
-from amipwned import database
+from amipwned.database import Database
 from amipwned.web_service import get_app, web
 
 
@@ -61,7 +61,6 @@ def main():
         "--config",
         action="store",
         dest="config",
-        type=int,
         help="Configuration file location",
     )
     args = parser.parse_args()
@@ -69,10 +68,13 @@ def main():
     if len(sys.argv) == 1:
         parser.print_help()
         quit()
+    
+    config = Config(filename=args.config)
+    db = Database(config.database())
+    db.init_db()
 
     if args.web:
         
-        config = Config()
         if not config.location():
             print(f"[-] Could not read configuration file at {config.filename}, does it exist?")
             sys.exit(1)
@@ -90,4 +92,4 @@ def main():
 
     if args.filename:
         print(f"[+] Loading {args.filename} into database...")
-        asyncio.run(database.load(args.filename))
+        asyncio.run(db.load(args.filename))

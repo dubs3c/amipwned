@@ -1,7 +1,9 @@
 import asyncio
 import logging
 import re
+import sys
 
+from psycopg2 import OperationalError
 from aiohttp import web
 import asyncpg
 from amipwned.config import Config
@@ -41,13 +43,18 @@ async def get_app():
     app = web.Application()
     conf = Config()
     db = conf.database()
-    app["pgsql"] = await asyncpg.create_pool(
-        user=db.get("username"),
-        host=db.get("host"),
-        port=db.get("port"),
-        database=db.get("name"),
-        command_timeout=60,
-    )
+    try:
+        app["pgsql"] = await asyncpg.create_pool(
+            user=db.get("username"),
+            host=db.get("host"),
+            password=db.get("password"),
+            port=db.get("port"),
+            database=db.get("name"),
+            command_timeout=60,
+        )
+    except OperationalError as e:
+        print(f"[-] Error connecting to DB: {e}")
+        sys.exit(1)
     app.add_routes(routes)
     app.on_shutdown.append(close_pgsql)
 
